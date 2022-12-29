@@ -10,6 +10,9 @@ from .. import io, default_ops
 from . import bidiphase as bidi
 from . import utils, rigid, nonrigid
 
+from importlib import reload
+reload(nonrigid)
+
 def compute_crop(xoff: int, yoff: int, corrXY, th_badframes, badframes, maxregshift, Ly: int, Lx:int):
     """ determines how much to crop FOV based on motion
     
@@ -218,7 +221,7 @@ def register_frames(refAndMasks, frames, rmin=-np.inf, rmax=np.inf, bidiphase=0,
 
 
     """
-
+    # reload(nonrigid)
     if nZ > 1:
         cmax_best = -np.inf * np.ones(len(frames), 'float32')
         cmax_all = -np.inf * np.ones((len(frames), nZ), 'float32')

@@ -233,7 +233,7 @@ def phasecorr(data: np.ndarray, maskMul, maskOffset, cfRefImg, snr_thresh, NRsm,
     return ymax1, xmax1, cmax1
 
 
-@njit(['(int16[:, :],float32[:,:], float32[:,:], float32[:,:])', 
+@njit(['(uint16[:, :],float32[:,:], float32[:,:], float32[:,:])', 
         '(float32[:, :],float32[:,:], float32[:,:], float32[:,:])'], cache=True)
 def map_coordinates(I, yc, xc, Y) -> None:
     """
@@ -268,8 +268,8 @@ def map_coordinates(I, yc, xc, Y) -> None:
                       np.float32(I[yf1, xf1]) * y * x )
 
 
-@njit(['int16[:, :,:], float32[:,:,:], float32[:,:,:], float32[:,:], float32[:,:], float32[:,:,:]',
-       'float32[:, :,:], float32[:,:,:], float32[:,:,:], float32[:,:], float32[:,:], float32[:,:,:]'], parallel=True, cache=True)
+@njit(['uint16[:,:,:], float32[:,:,:], float32[:,:,:], float32[:,:], float32[:,:], float32[:,:,:]',
+       'float32[:,:,:], float32[:,:,:], float32[:,:,:], float32[:,:], float32[:,:], float32[:,:,:]'], parallel=True, cache=True)
 def shift_coordinates(data, yup, xup, mshy, mshx, Y):
     """
     Shift data into yup and xup coordinates
