@@ -10,9 +10,6 @@ from .. import io, default_ops
 from . import bidiphase as bidi
 from . import utils, rigid, nonrigid
 
-from importlib import reload
-reload(nonrigid)
-
 def compute_crop(xoff: int, yoff: int, corrXY, th_badframes, badframes, maxregshift, Ly: int, Lx:int):
     """ determines how much to crop FOV based on motion
     
