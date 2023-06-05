@@ -233,7 +233,8 @@ def phasecorr(data: np.ndarray, maskMul, maskOffset, cfRefImg, snr_thresh, NRsm,
     return ymax1, xmax1, cmax1
 
 
-@njit(['(uint16[:, :],float32[:,:], float32[:,:], float32[:,:])', 
+@njit(['(uint16[:, :],float32[:,:], float32[:,:], float32[:,:])',
+        '(int16[:, :],float32[:,:], float32[:,:], float32[:,:])', 
         '(float32[:, :],float32[:,:], float32[:,:], float32[:,:])'], cache=True)
 def map_coordinates(I, yc, xc, Y) -> None:
     """
@@ -269,6 +270,7 @@ def map_coordinates(I, yc, xc, Y) -> None:
 
 
 @njit(['uint16[:,:,:], float32[:,:,:], float32[:,:,:], float32[:,:], float32[:,:], float32[:,:,:]',
+        'int16[:,:,:], float32[:,:,:], float32[:,:,:], float32[:,:], float32[:,:], float32[:,:,:]',
        'float32[:,:,:], float32[:,:,:], float32[:,:,:], float32[:,:], float32[:,:], float32[:,:,:]'], parallel=True, cache=True)
 def shift_coordinates(data, yup, xup, mshy, mshx, Y):
     """
@@ -407,6 +409,7 @@ def transform_data(data, nblocks, xblock, yblock, ymax1, xmax1, bilinear=True):
     # use shifts and do bilinear interpolation
     mshx, mshy = np.meshgrid(np.arange(Lx, dtype=np.float32), np.arange(Ly, dtype=np.float32))
     Y = np.zeros_like(data, dtype=np.float32)
+    print(type(data[0,0,0]))
     shift_coordinates(data, yup, xup, mshy, mshx, Y)
     return Y
 
