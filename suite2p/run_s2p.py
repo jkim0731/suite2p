@@ -380,7 +380,8 @@ def run_s2p(ops={}, db={}, server={}):
             ops['input_format'] = 'h5'
             # Overwrite data_path with path provided by h5py. 
             # Use the directory containing the first h5 file
-            ops['data_path'] = [os.path.split(ops['h5py'][0])[0]]
+            # ops['data_path'] = [os.path.split(ops['h5py'][0])[0]]
+            ops['data_path'] = []
         elif len(ops['nwb_file']):
             ops['input_format'] = 'nwb'
         elif ops.get('mesoscan'):
